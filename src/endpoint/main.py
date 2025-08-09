@@ -1,11 +1,19 @@
+import os
 import pickle
 from fastapi import FastAPI
 from pydantic import BaseModel
-#path = 'C:\\Users\\lupep\\PycharmProjects\\mlModelsFastAPIdp\\src\\model\\iris_model.pkl'
-model_path = '..\\src\\model\\iris_model.pkl'
-# Load the model once at startup
-model = pickle.load(open(model_path, 'rb'))
-print("Model loaded successfully Type")
+
+# Get the folder where the current script is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Go to the model folder relative to this file
+MODEL_PATH = os.path.join(BASE_DIR, "..", "model", "iris_model.pkl")
+# Normalize the path for Linux
+MODEL_PATH = os.path.normpath(MODEL_PATH)
+
+# Load the pickle model
+with open(MODEL_PATH, "rb") as f:
+    model = pickle.load(f)
+    print("Model loaded successfully Type")
 
 app = FastAPI()
 
